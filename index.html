@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир настольных игр</title>
+    <link rel="stylesheet" href="stilno/main.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+
+            <a class="logo" href="#home">Мир настольных игр</a>
+
+            <nav class="navigation">
+                <a href="#home">Главная</a>
+                <a href="#popular">Популярное</a>
+                <a href="#catalog">Каталог</a>
+                <a href="#search">Поиск</a>
+                <a href="#about">О проекте</a>
+            </nav>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- Главная -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+
+                <p class="section-label">Каталог настольных игр</p>
+
+                <h1>Найди настольную игру для хорошего вечера</h1>
+
+                <p class="hero-text">
+                    Мир настольных игр — это каталог, в котором можно
+                    познакомиться с популярными играми, узнать их жанр,
+                    количество игроков и продолжительность партии.
+                </p>
+
+                <a class="main-button" href="#catalog">
+                    Посмотреть каталог
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- Популярные игры -->
+        <section class="section" id="popular">
+            <div class="container">
+
+                <div class="section-heading">
+                    <p class="section-label">Популярное</p>
+
+                    <h2>Популярные игры</h2>
+
+                    <p>
+                        Несколько известных настольных игр,
+                        с которых можно начать знакомство с каталогом.
+                    </p>
+                </div>
+
+
+                <div class="popular-grid">
+
+                    <article class="popular-card">
+
+                        <div class="popular-label">
+                            Стратегия
+                        </div>
+
+                        <h3>Каркассон</h3>
+
+                        <p>
+                            Создавайте средневековую местность,
+                            размещая города, дороги и другие объекты.
+                        </p>
+
+                        <div class="game-info">
+                            <span>2–5 игроков</span>
+                            <span>30–45 минут</span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="popular-card">
+
+                        <div class="popular-label">
+                            Стратегия
+                        </div>
+
+                        <h3>Колонизаторы</h3>
+
+                        <p>
+                            Добывайте ресурсы, развивайте поселения
+                            и торгуйте с другими игроками.
+                        </p>
+
+                        <div class="game-info">
+                            <span>3–4 игрока</span>
+                            <span>60–90 минут</span>
+                        </div>
+
+                    </article>
+
+
+                    <article class="popular-card">
+
+                        <div class="popular-label">
+                            Семейная
+                        </div>
+
+                        <h3>Ticket to Ride</h3>
+
+                        <p>
+                            Прокладывайте железнодорожные маршруты
+                            между городами и выполняйте задания.
+                        </p>
+
+                        <div class="game-info">
+                            <span>2–5 игроков</span>
+                            <span>30–60 минут</span>
+                        </div>
+
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Поиск -->
+        <section class="search-section" id="search">
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <p class="section-label">Поиск</p>
+
+                    <h2>Найти игру</h2>
+
+                    <p>
+                        Введите название игры или выберите жанр.
+                    </p>
+
+                </div>
+
+
+                <form class="search-form">
+
+                    <div class="form-group">
+
+                        <label for="game-name">
+                            Название игры
+                        </label>
+
+                        <input
+                            type="search"
+                            id="game-name"
+                            name="game-name"
+                            placeholder="Например, Каркассон"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="genre">
+                            Жанр
+                        </label>
+
+                        <select id="genre" name="genre">
+
+                            <option value="">
+                                Все жанры
+                            </option>
+
+                            <option value="strategy">
+                                Стратегия
+                            </option>
+
+                            <option value="family">
+                                Семейная
+                            </option>
+
+                            <option value="party">
+                                Для компании
+                            </option>
+
+                            <option value="detective">
+                                Детектив
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button type="submit">
+                        Найти
+                    </button>
+
+                </form>
+
+            </div>
+        </section>
+
+
+        <!-- Каталог -->
+        <section class="section catalog-section" id="catalog">
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <p class="section-label">
+                        Все игры
+                    </p>
+
+                    <h2>Каталог</h2>
+
+                    <p>
+                        Подборка настольных игр разных жанров.
+                    </p>
+
+                </div>
+
+
+                <div class="cards">
+
+                    <!-- Карточка 1 -->
+                    <article class="card">
+
+                        <div class="card-cover">
+                            <span>Стратегия</span>
+                        </div>
+
+                        <div class="card-content">
+
+                            <h3>Каркассон</h3>
+
+                            <p>
+                                Стратегическая игра о строительстве
+                                средневековой местности.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Жанр:</strong>
+                                    стратегия
+                                </li>
+
+                                <li>
+                                    <strong>Игроки:</strong>
+                                    2–5
+                                </li>
+
+                                <li>
+                                    <strong>Время:</strong>
+                                    30–45 минут
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Карточка 2 -->
+                    <article class="card">
+
+                        <div class="card-cover">
+                            <span>Стратегия</span>
+                        </div>
+
+                        <div class="card-content">
+
+                            <h3>Колонизаторы</h3>
+
+                            <p>
+                                Экономическая игра о развитии поселений,
+                                торговле и добыче ресурсов.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Жанр:</strong>
+                                    стратегия
+                                </li>
+
+                                <li>
+                                    <strong>Игроки:</strong>
+                                    3–4
+                                </li>
+
+                                <li>
+                                    <strong>Время:</strong>
+                                    60–90 минут
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Карточка 3 -->
+                    <article class="card">
+
+                        <div class="card-cover">
+                            <span>Детектив</span>
+                        </div>
+
+                        <div class="card-content">
+
+                            <h3>Клуэдо</h3>
+
+                            <p>
+                                Детективная игра, в которой нужно
+                                раскрыть преступление.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Жанр:</strong>
+                                    детектив
+                                </li>
+
+                                <li>
+                                    <strong>Игроки:</strong>
+                                    2–6
+                                </li>
+
+                                <li>
+                                    <strong>Время:</strong>
+                                    40–60 минут
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Карточка 4 -->
+                    <article class="card">
+
+                        <div class="card-cover">
+                            <span>Экономическая</span>
+                        </div>
+
+                        <div class="card-content">
+
+                            <h3>Монополия</h3>
+
+                            <p>
+                                Классическая игра про недвижимость,
+                                торговлю и управление капиталом.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Жанр:</strong>
+                                    экономическая
+                                </li>
+
+                                <li>
+                                    <strong>Игроки:</strong>
+                                    2–6
+                                </li>
+
+                                <li>
+                                    <strong>Время:</strong>
+                                    60–180 минут
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Карточка 5 -->
+                    <article class="card">
+
+                        <div class="card-cover">
+                            <span>Для компании</span>
+                        </div>
+
+                        <div class="card-content">
+
+                            <h3>Имаджинариум</h3>
+
+                            <p>
+                                Игра на воображение и ассоциации
+                                для большой компании.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Жанр:</strong>
+                                    для компании
+                                </li>
+
+                                <li>
+                                    <strong>Игроки:</strong>
+                                    4–7
+                                </li>
+
+                                <li>
+                                    <strong>Время:</strong>
+                                    30–60 минут
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Карточка 6 -->
+                    <article class="card">
+
+                        <div class="card-cover">
+                            <span>Семейная</span>
+                        </div>
+
+                        <div class="card-content">
+
+                            <h3>Ticket to Ride</h3>
+
+                            <p>
+                                Игра о строительстве железнодорожных
+                                маршрутов между городами.
+                            </p>
+
+                            <ul>
+                                <li>
+                                    <strong>Жанр:</strong>
+                                    семейная
+                                </li>
+
+                                <li>
+                                    <strong>Игроки:</strong>
+                                    2–5
+                                </li>
+
+                                <li>
+                                    <strong>Время:</strong>
+                                    30–60 минут
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- О проекте -->
+        <section class="about" id="about">
+            <div class="container about-content">
+
+                <div>
+
+                    <p class="section-label">
+                        О проекте
+                    </p>
+
+                    <h2>
+                        Для чего нужен каталог?
+                    </h2>
+
+                </div>
+
+
+                <p>
+                    Каталог помогает познакомиться с настольными играми
+                    и сравнить их основные характеристики. В дальнейшем
+                    проект можно дополнить работающим поиском,
+                    фильтрацией, рейтингами и отзывами пользователей.
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <p>
+                Мир настольных игр · Учебный проект по веб-программированию
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
