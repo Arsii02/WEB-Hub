@@ -10,7 +10,6 @@
 
 # Лабораторная работа №2
 
-## «Интерактивный Frontend и State-Driven SPA»
 
 **Веб-приложение «Мир настольных игр»**
 
@@ -75,19 +74,11 @@
 ```text
 project/
 ├── index.html
-├── README.md
 ├── stilno/
 │   └── main.css
 ├── js/
 │   └── app.js
-└── screenshots/
-    ├── popular.png
-    ├── controls.png
-    ├── sorting.png
-    ├── filtering.png
-    ├── search.png
-    ├── validation.png
-    └── add-game.png
+
 ```
 
 JavaScript подключается перед закрывающим тегом `body`:
