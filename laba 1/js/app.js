@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'board-games';
+const API_URL = 'http://127.0.0.1:8000/api/board-games';
 
 const categories = {
     strategy: 'Стратегия',
@@ -13,61 +13,8 @@ const statuses = {
     unavailable: 'Нет в наличии'
 };
 
-const defaultItems = [
-    {
-        id: '1',
-        name: 'Каркассон',
-        category: 'strategy',
-        rating: 8.1,
-        description: 'Стратегическая игра о строительстве средневековой местности.',
-        status: 'available'
-    },
-    {
-        id: '2',
-        name: 'Колонизаторы',
-        category: 'strategy',
-        rating: 8.0,
-        description: 'Игра о развитии поселений, торговле и ресурсах.',
-        status: 'available'
-    },
-    {
-        id: '3',
-        name: 'Клуэдо',
-        category: 'detective',
-        rating: 7.2,
-        description: 'Детективная игра, в которой нужно раскрыть преступление.',
-        status: 'available'
-    },
-    {
-        id: '4',
-        name: 'Монополия',
-        category: 'economic',
-        rating: 6.8,
-        description: 'Классическая игра про недвижимость и капитал.',
-        status: 'available'
-    },
-    {
-        id: '5',
-        name: 'Имаджинариум',
-        category: 'party',
-        rating: 7.5,
-        description: 'Игра на воображение и ассоциации для компании.',
-        status: 'unavailable'
-    },
-    {
-        id: '6',
-        name: 'Ticket to Ride',
-        category: 'family',
-        rating: 8.3,
-        description: 'Игра о строительстве железнодорожных маршрутов.',
-        status: 'available'
-    }
-];
-
-const savedItems = localStorage.getItem(STORAGE_KEY);
-
 const state = {
-    items: savedItems ? JSON.parse(savedItems) : defaultItems,
+    items: [],
     searchQuery: '',
     selectedCategory: 'all',
     sortBy: 'name-asc'
@@ -77,7 +24,6 @@ const gamesList = document.getElementById('gamesList');
 const searchInput = document.getElementById('game-name');
 const genreSelect = document.getElementById('genre');
 const sortSelect = document.getElementById('sort');
-
 const modal = document.getElementById('gameModal');
 const openModalButton = document.getElementById('openModalButton');
 const closeModalButton = document.getElementById('closeModalButton');
@@ -86,11 +32,19 @@ const modalBackdrop = document.getElementById('modalBackdrop');
 const addGameForm = document.getElementById('addGameForm');
 
 
-function saveItems() {
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(state.items)
-    );
+async function loadGames() {
+    try {
+        const response = await fetch(API_URL);
+
+        if (!response.ok) {
+            throw new Error('Ошибка загрузки игр');
+        }
+
+        state.items = await response.json();
+        render();
+    } catch (error) {
+        gamesList.textContent = 'Не удалось загрузить игры с сервера.';
+    }
 }
 
 
@@ -141,7 +95,6 @@ function createCard(item) {
 
     const category = document.createElement('span');
     category.textContent = categories[item.category];
-
     cover.append(category);
 
     const content = document.createElement('div');
@@ -159,16 +112,25 @@ function createCard(item) {
     const rating = document.createElement('span');
     rating.textContent = `Рейтинг: ${item.rating}`;
 
-    const status = document.createElement('span');
-    status.textContent = statuses[item.status];
+    const gameStatus = document.createElement('span');
+    gameStatus.textContent = statuses[item.status];
+
+    const actions = document.createElement('div');
+    actions.className = 'card-actions';
+
+    const editButton = document.createElement('button');
+    editButton.type = 'button';
+    editButton.className = 'edit-button';
+    editButton.textContent = 'Изменить рейтинг';
 
     const deleteButton = document.createElement('button');
     deleteButton.type = 'button';
     deleteButton.className = 'delete-button';
     deleteButton.textContent = 'Удалить';
 
-    info.append(rating, status);
-    content.append(title, description, info, deleteButton);
+    info.append(rating, gameStatus);
+    actions.append(editButton, deleteButton);
+    content.append(title, description, info, actions);
     card.append(cover, content);
 
     return card;
@@ -194,31 +156,21 @@ function render() {
 }
 
 
-/* Поиск */
-
 searchInput.addEventListener('input', (event) => {
     state.searchQuery = event.target.value;
     render();
 });
-
-
-/* Фильтр */
 
 genreSelect.addEventListener('change', (event) => {
     state.selectedCategory = event.target.value;
     render();
 });
 
-
-/* Сортировка */
-
 sortSelect.addEventListener('change', (event) => {
     state.sortBy = event.target.value;
     render();
 });
 
-
-/* Модальное окно */
 
 function openModal() {
     addGameForm.reset();
@@ -241,20 +193,14 @@ document.addEventListener('keydown', (event) => {
 });
 
 
-/* Валидация и добавление */
-
-addGameForm.addEventListener('submit', (event) => {
+addGameForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const fields = addGameForm.querySelectorAll(
-        'input, select, textarea'
-    );
-
+    const fields = addGameForm.querySelectorAll('input, select, textarea');
     let valid = true;
 
     fields.forEach((field) => {
-        const error =
-            document.getElementById(`${field.id}Error`);
+        const error = document.getElementById(`${field.id}Error`);
 
         if (!field.validity.valid) {
             error.textContent = 'Проверьте правильность заполнения.';
@@ -271,7 +217,6 @@ addGameForm.addEventListener('submit', (event) => {
     const formData = new FormData(addGameForm);
 
     const newGame = {
-        id: String(Date.now()),
         name: formData.get('name').trim(),
         category: formData.get('category'),
         rating: Number(formData.get('rating')),
@@ -279,33 +224,84 @@ addGameForm.addEventListener('submit', (event) => {
         status: formData.get('status')
     };
 
-    state.items = [...state.items, newGame];
+    const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newGame)
+    });
 
-    saveItems();
-    render();
+    if (!response.ok) {
+        alert('Не удалось добавить игру.');
+        return;
+    }
+
+    await loadGames();
     closeModal();
 });
 
 
-/* Удаление через Event Delegation */
+async function updateRating(id) {
+    const game = state.items.find((item) => item.id === id);
+    const value = prompt('Введите новый рейтинг от 1 до 10:', game.rating);
 
-gamesList.addEventListener('click', (event) => {
-    const button = event.target.closest('.delete-button');
-
-    if (button === null) {
+    if (value === null) {
         return;
     }
 
-    const card = button.closest('.card');
-    const id = card.dataset.id;
+    const rating = Number(value.replace(',', '.'));
 
-    state.items = state.items.filter(
-        (item) => item.id !== id
-    );
+    if (Number.isNaN(rating) || rating < 1 || rating > 10) {
+        alert('Рейтинг должен быть от 1 до 10.');
+        return;
+    }
 
-    saveItems();
-    render();
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ rating })
+    });
+
+    if (!response.ok) {
+        alert('Не удалось изменить рейтинг.');
+        return;
+    }
+
+    await loadGames();
+}
+
+
+async function deleteGame(id) {
+    const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+    });
+
+    if (response.status !== 204) {
+        alert('Не удалось удалить игру.');
+        return;
+    }
+
+    await loadGames();
+}
+
+
+gamesList.addEventListener('click', async (event) => {
+    const editButton = event.target.closest('.edit-button');
+    const deleteButton = event.target.closest('.delete-button');
+
+    if (editButton !== null) {
+        const card = editButton.closest('.card');
+        await updateRating(Number(card.dataset.id));
+    }
+
+    if (deleteButton !== null) {
+        const card = deleteButton.closest('.card');
+        await deleteGame(Number(card.dataset.id));
+    }
 });
 
 
-render();
+loadGames();
