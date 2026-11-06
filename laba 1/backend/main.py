@@ -6,10 +6,8 @@ from fastapi import FastAPI, HTTPException, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-
-# -----------------------------
 # БАЗА ДАННЫХ
-# -----------------------------
+
 
 DB_PATH = Path(__file__).parent / "board_games.db"
 
@@ -104,9 +102,8 @@ def init_database():
         db.commit()
 
 
-# -----------------------------
 # СХЕМЫ ДАННЫХ
-# -----------------------------
+
 
 Category = Literal[
     "strategy",
@@ -142,9 +139,8 @@ class BoardGame(BoardGameCreate):
     id: int
 
 
-# -----------------------------
 # FASTAPI
-# -----------------------------
+
 
 app = FastAPI(
     title="Мир настольных игр API",
@@ -165,9 +161,9 @@ app.add_middleware(
 init_database()
 
 
-# -----------------------------
+
 # GET — ПОЛУЧИТЬ ВСЕ ИГРЫ
-# -----------------------------
+
 
 @app.get("/api/board-games", response_model=list[BoardGame])
 def get_games():
@@ -179,12 +175,11 @@ def get_games():
     return [dict(row) for row in rows]
 
 
-# -----------------------------
+
 # POST — ДОБАВИТЬ ИГРУ
-# -----------------------------
+
 
 @app.post(
-    "/api/board-games",
     response_model=BoardGame,
     status_code=status.HTTP_201_CREATED
 )
@@ -213,9 +208,9 @@ def create_game(game: BoardGameCreate):
     return dict(row)
 
 
-# -----------------------------
+
 # GET — ПОЛУЧИТЬ ИГРУ ПО ID
-# -----------------------------
+
 
 @app.get("/api/board-games/{game_id}", response_model=BoardGame)
 def get_game(game_id: int):
@@ -234,9 +229,9 @@ def get_game(game_id: int):
     return dict(row)
 
 
-# -----------------------------
+
 # PATCH — ИЗМЕНИТЬ ИГРУ
-# -----------------------------
+
 
 @app.patch("/api/board-games/{game_id}", response_model=BoardGame)
 def update_game(game_id: int, game: BoardGameUpdate):
@@ -284,9 +279,7 @@ def update_game(game_id: int, game: BoardGameUpdate):
     return dict(row)
 
 
-# -----------------------------
 # DELETE — УДАЛИТЬ ИГРУ
-# -----------------------------
 
 @app.delete(
     "/api/board-games/{game_id}",
